@@ -1,0 +1,19 @@
+# AutoReplant config
+AutoReplantEnabled: true
+# Change to 'false' and crop won't be auto-replanted on break
+potato: true
+carrot: true
+wheat: true
+beetroot: true
+cocoa: true
+netherwart: true
+
+#AutoPlant
+AutoPlantEnabled: true
+# Change to 'false' and crop won't be auto-planted on tilling
+plantpotato: true
+plantcarrot: true
+plantwheat: true
+plantbeetroot: true
+plantcocoa: true
+plantnetherwart: true

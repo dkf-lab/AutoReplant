@@ -1,0 +1,5 @@
+name: AutoReplant
+version: ${project.version}
+main: me.dkflab.autoreplant.AutoReplant
+authors: [dkflab]
+description: Automatically replants crops.
