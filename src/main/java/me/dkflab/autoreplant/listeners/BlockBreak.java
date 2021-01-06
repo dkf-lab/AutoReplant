@@ -32,7 +32,7 @@ public class BlockBreak implements Listener {
         ItemStack carrot = new ItemStack(Material.CARROT_ITEM, 1);
         ItemStack potato = new ItemStack(Material.POTATO_ITEM, 1);
         ItemStack beetroot = new ItemStack(Material.BEETROOT_SEEDS, 1);
-        ItemStack cocoa = new ItemStack(Material.INK_SACK, 1, (short) DyeColor.BROWN.getDyeData());
+        ItemStack cocoa = new ItemStack(Material.INK_SACK, 3, (short) DyeColor.BROWN.getDyeData());
         ItemStack wart = new ItemStack(Material.NETHER_STALK, 1);
         // wheat
         if (stringdata.equals("RIPE CROPS(7)") && plugin.getConfig().getBoolean("wheat")) {
@@ -40,6 +40,8 @@ public class BlockBreak implements Listener {
                 removeInv(player, Material.SEEDS);
                 event.setCancelled(true);
                 event.getBlock().setType(Material.CROPS);
+                // give player wheat/seeds
+                dropItem(player, new ItemStack (Material.SEEDS, 2), new ItemStack(Material.WHEAT, 1));
             }
         }
         // carrot
@@ -48,6 +50,8 @@ public class BlockBreak implements Listener {
                 removeInv(player, Material.CARROT_ITEM);
                 event.setCancelled(true);
                 event.getBlock().setType(Material.CARROT);
+                // give player carrot
+                player.getInventory().addItem(new ItemStack(Material.CARROT_ITEM, 3));
             }
         }
         // potato
@@ -56,6 +60,8 @@ public class BlockBreak implements Listener {
                 removeInv(player, Material.POTATO_ITEM);
                 event.setCancelled(true);
                 event.getBlock().setType(Material.POTATO);
+                // give player potato
+                player.getInventory().addItem(new ItemStack(Material.POTATO_ITEM, 3));
             }
         }
         // beetroot
@@ -64,6 +70,13 @@ public class BlockBreak implements Listener {
                 removeInv(player, Material.BEETROOT_SEEDS);
                 event.setCancelled(true);
                 event.getBlock().setType(Material.BEETROOT_BLOCK);
+                // beetroot
+                if (Math.random() >0.75) {
+                    dropItem(player, new ItemStack (Material.BEETROOT), new ItemStack (Material.BEETROOT_SEEDS, 3));
+                }
+                else  {
+                    dropItem(player, new ItemStack (Material.BEETROOT), new ItemStack (Material.BEETROOT_SEEDS, 2));
+                }
             }
         }
         //cocoa
@@ -78,6 +91,8 @@ public class BlockBreak implements Listener {
                     state.setData(cocoaPlant);
                     state.update();
                     event.setCancelled(true);
+                    // give player cocoa
+                    player.getInventory().addItem(cocoa);
                 }
             }
         }
@@ -92,9 +107,21 @@ public class BlockBreak implements Listener {
                     event.setCancelled(true);
                     //take out of inventory
                     removeInv(player, Material.NETHER_STALK);
+                    //give player netherwart
+                    if (Math.random() > 0.5) {
+                        player.getInventory().addItem(new ItemStack (Material.NETHER_STALK, 2));
+                    }
+                    else {
+                        player.getInventory().addItem(new ItemStack (Material.NETHER_STALK, 3));
+                    }
                 }
             }
         }
+    }
+
+    private void dropItem(Player player, ItemStack crop, ItemStack seeds) {
+        player.getInventory().addItem(crop);
+        player.getInventory().addItem(seeds);
     }
 
     private Boolean checkInv(Player player, ItemStack item) {
