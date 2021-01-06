@@ -41,7 +41,8 @@ public class BlockBreak implements Listener {
                 event.setCancelled(true);
                 event.getBlock().setType(Material.CROPS);
                 // give player wheat/seeds
-                dropItem(player, new ItemStack (Material.SEEDS, 2), new ItemStack(Material.WHEAT, 1));
+                player.getInventory().addItem(new ItemStack(Material.WHEAT, 1));
+                randomDrops(player, Material.SEEDS, false);
             }
         }
         // carrot
@@ -51,7 +52,7 @@ public class BlockBreak implements Listener {
                 event.setCancelled(true);
                 event.getBlock().setType(Material.CARROT);
                 // give player carrot
-                player.getInventory().addItem(new ItemStack(Material.CARROT_ITEM, 3));
+                randomDrops(player, Material.CARROT_ITEM, true);
             }
         }
         // potato
@@ -61,7 +62,7 @@ public class BlockBreak implements Listener {
                 event.setCancelled(true);
                 event.getBlock().setType(Material.POTATO);
                 // give player potato
-                player.getInventory().addItem(new ItemStack(Material.POTATO_ITEM, 3));
+                randomDrops(player, Material.POTATO_ITEM, true);
             }
         }
         // beetroot
@@ -71,12 +72,8 @@ public class BlockBreak implements Listener {
                 event.setCancelled(true);
                 event.getBlock().setType(Material.BEETROOT_BLOCK);
                 // beetroot
-                if (Math.random() >0.75) {
-                    dropItem(player, new ItemStack (Material.BEETROOT), new ItemStack (Material.BEETROOT_SEEDS, 3));
-                }
-                else  {
-                    dropItem(player, new ItemStack (Material.BEETROOT), new ItemStack (Material.BEETROOT_SEEDS, 2));
-                }
+                player.getInventory().addItem(new ItemStack(Material.BEETROOT, 1));
+                randomDrops(player, Material.BEETROOT_SEEDS, false);
             }
         }
         //cocoa
@@ -108,20 +105,22 @@ public class BlockBreak implements Listener {
                     //take out of inventory
                     removeInv(player, Material.NETHER_STALK);
                     //give player netherwart
-                    if (Math.random() > 0.5) {
-                        player.getInventory().addItem(new ItemStack (Material.NETHER_STALK, 2));
-                    }
-                    else {
-                        player.getInventory().addItem(new ItemStack (Material.NETHER_STALK, 3));
-                    }
+                    randomDrops(player, Material.NETHER_STALK, true);
                 }
             }
         }
     }
 
-    private void dropItem(Player player, ItemStack crop, ItemStack seeds) {
-        player.getInventory().addItem(crop);
-        player.getInventory().addItem(seeds);
+    private void randomDrops(Player player, Material drop, Boolean guarantee) {
+        if (guarantee) {
+            player.getInventory().addItem(new ItemStack (drop, 2));
+        }
+        for (int i = 0; i < 3; ++i) {
+            //loops 3 times
+            if (Math.random() > 0.57) {
+                player.getInventory().addItem(new ItemStack (drop, 1));
+            }
+        }
     }
 
     private Boolean checkInv(Player player, ItemStack item) {
