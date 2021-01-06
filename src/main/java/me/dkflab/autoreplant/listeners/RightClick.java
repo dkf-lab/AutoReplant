@@ -22,15 +22,11 @@ public class RightClick implements Listener {
     public void onRightClick(PlayerInteractEvent event) throws InterruptedException {
         Action action = event.getAction();
         Player player = event.getPlayer();
-        ItemStack mainhand = player.getInventory().getItemInMainHand();
-        ItemStack diamondhoe = new ItemStack(Material.DIAMOND_HOE);
-        ItemStack goldhoe = new ItemStack(Material.GOLD_HOE);
-        ItemStack woodhoe = new ItemStack(Material.WOOD_HOE);
-        ItemStack ironhoe = new ItemStack(Material.IRON_HOE);
-        ItemStack stonehoe = new ItemStack(Material.STONE_HOE);
+        Material mainhand = player.getInventory().getItemInMainHand().getType();
         ItemStack offhand = player.getInventory().getItemInOffHand();
         if (action == Action.RIGHT_CLICK_BLOCK && (event.getClickedBlock().getType().equals(Material.DIRT) || event.getClickedBlock().getType().equals(Material.GRASS))) {
-            if (mainhand.isSimilar(diamondhoe) || mainhand.isSimilar(goldhoe) || mainhand.isSimilar(ironhoe) || mainhand.isSimilar(woodhoe) || mainhand.isSimilar(stonehoe)) {
+            player.sendMessage(mainhand.toString());
+            if (mainhand.equals(Material.DIAMOND_HOE)||mainhand.equals(Material.GOLD_HOE)||mainhand.equals(Material.IRON_HOE)||mainhand.equals(Material.STONE_HOE)||mainhand.equals(Material.WOOD_HOE)) {
                 //wheat
                 if (offhand.getType().equals(Material.SEEDS) && plugin.getConfig().getBoolean("plantwheat")) {
                     tillSet(event, Material.SEEDS, Material.CROPS);
