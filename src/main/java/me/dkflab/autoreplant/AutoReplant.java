@@ -11,8 +11,14 @@ public final class AutoReplant extends JavaPlugin {
         // Config
         saveDefaultConfig();
         // Listeners
-        getServer().getPluginManager().registerEvents(new BlockBreak(this), this);
-        getServer().getPluginManager().registerEvents(new RightClick(this), this);
+        if (getConfig().getBoolean("AutoReplantEnabled")) {
+            getServer().getPluginManager().registerEvents(new BlockBreak(this), this);
+            System.out.println("AutoReplant enabling...");
+        }
+        if (getConfig().getBoolean("AutoPlantEnabled")) {
+            getServer().getPluginManager().registerEvents(new RightClick(this), this);
+            System.out.println("AutoPlant enabling...");
+        }
         System.out.println("dkf-lab's AutoReplant Enabled.");
     }
 
