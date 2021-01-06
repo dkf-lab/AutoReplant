@@ -41,7 +41,7 @@ public class BlockBreak implements Listener {
                 event.setCancelled(true);
                 event.getBlock().setType(Material.CROPS);
                 // give player wheat/seeds
-                player.getInventory().addItem(new ItemStack(Material.WHEAT, 1));
+                player.getWorld().dropItem(player.getLocation(), new ItemStack (Material.WHEAT, 1));
                 randomDrops(player, Material.SEEDS, false);
             }
         }
@@ -72,7 +72,7 @@ public class BlockBreak implements Listener {
                 event.setCancelled(true);
                 event.getBlock().setType(Material.BEETROOT_BLOCK);
                 // beetroot
-                player.getInventory().addItem(new ItemStack(Material.BEETROOT, 1));
+                player.getWorld().dropItem(player.getLocation(), new ItemStack(Material.BEETROOT, 1));
                 randomDrops(player, Material.BEETROOT_SEEDS, false);
             }
         }
@@ -89,7 +89,7 @@ public class BlockBreak implements Listener {
                     state.update();
                     event.setCancelled(true);
                     // give player cocoa
-                    player.getInventory().addItem(cocoa);
+                    player.getWorld().dropItem(player.getLocation(), cocoa);
                 }
             }
         }
@@ -113,12 +113,12 @@ public class BlockBreak implements Listener {
 
     private void randomDrops(Player player, Material drop, Boolean guarantee) {
         if (guarantee) {
-            player.getInventory().addItem(new ItemStack (drop, 2));
+            player.getWorld().dropItem(player.getLocation(), new ItemStack(drop, 2));
         }
         for (int i = 0; i < 3; ++i) {
             //loops 3 times
             if (Math.random() > 0.57) {
-                player.getInventory().addItem(new ItemStack (drop, 1));
+                player.getWorld().dropItem(player.getLocation(), new ItemStack(drop, 1));
             }
         }
     }
